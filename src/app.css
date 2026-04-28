@@ -1,0 +1,157 @@
+/* Design tokens — geometric, restrained, content-first.
+   Primary: deep navy. Accents: coral and mustard (drawn from the smiley/emoji theme).
+   Typography: geometric sans (Manrope), JetBrains Mono for code. */
+
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  /* Color */
+  --c-primary:    #2b3a55;   /* deep navy */
+  --c-primary-2:  #3a4f73;
+  --c-accent:     #e36588;   /* coral */
+  --c-accent-2:   #f5b754;   /* mustard */
+  --c-good:       #4f9d69;
+  --c-bad:        #c0392b;
+
+  --c-ink:        #1f2540;
+  --c-ink-soft:   #4a5170;
+  --c-ink-mute:   #8089a8;
+
+  --c-surface:    #ffffff;
+  --c-surface-2:  #f5f6fa;
+  --c-line:       #e2e6ef;
+  --c-locked:     #f0eef9;   /* faint lavender for locked editor lines */
+
+  /* Type */
+  --font-sans: 'Manrope', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+
+  /* Space scale (4px base) */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 24px;
+  --s-6: 32px;
+  --s-7: 48px;
+  --s-8: 64px;
+
+  /* Radius */
+  --radius-sm: 6px;
+  --radius:    10px;
+  --radius-lg: 14px;
+
+  /* Shadow */
+  --shadow-1: 0 1px 2px rgba(31, 37, 64, 0.06);
+  --shadow-2: 0 6px 24px rgba(31, 37, 64, 0.10);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-sans);
+  color: var(--c-ink);
+  background: var(--c-surface-2);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+h1 { font-size: 28px; }
+h2 { font-size: 22px; }
+h3 { font-size: 18px; }
+
+a { color: var(--c-primary); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* Buttons — minimal, geometric */
+button {
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 7px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--c-line);
+  background: var(--c-surface);
+  color: var(--c-ink);
+  cursor: pointer;
+  transition: background 0.12s, border-color 0.12s, color 0.12s;
+}
+button:hover { border-color: var(--c-primary); }
+button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  border-color: var(--c-line);
+}
+
+button.primary {
+  background: var(--c-primary);
+  color: white;
+  border-color: var(--c-primary);
+}
+button.primary:hover:not(:disabled) {
+  background: var(--c-primary-2);
+  border-color: var(--c-primary-2);
+}
+
+button.accent {
+  background: var(--c-accent);
+  color: white;
+  border-color: var(--c-accent);
+}
+button.accent:hover:not(:disabled) {
+  filter: brightness(0.95);
+}
+
+button.ghost {
+  background: transparent;
+  border-color: var(--c-line);
+}
+button.ghost:hover:not(:disabled) {
+  background: var(--c-surface-2);
+}
+
+input[type="checkbox"] { accent-color: var(--c-primary); }
+
+/* Prose blocks (pre/post task markdown) */
+.prose {
+  line-height: 1.65;
+}
+.prose h2, .prose h3 { margin-top: var(--s-5); margin-bottom: var(--s-3); }
+.prose p { margin: var(--s-3) 0; }
+.prose ol, .prose ul { padding-left: 22px; }
+.prose li { margin: 4px 0; }
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 13.5px;
+  background: var(--c-surface-2);
+  padding: 1px 5px;
+  border-radius: 4px;
+  border: 1px solid var(--c-line);
+}
+.prose strong { color: var(--c-ink); }
+.prose em { color: var(--c-ink-soft); }
+
+/* Decorative geometric accents — used sparingly. */
+.geo-rule {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: var(--s-5) 0;
+}
+.geo-rule::before,
+.geo-rule::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--c-line);
+}

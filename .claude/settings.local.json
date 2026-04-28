@@ -1,0 +1,37 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 -c \"import pdfplumber; pdf = pdfplumber.open\\('/c/Code/d3-practice-tasks/prev_sessoions/Exercise Slide E01 - Web Technologies.pdf'\\); [print\\(f'--- Page {i+1} ---\\\\n{p.extract_text\\(\\)}'\\) for i, p in enumerate\\(pdf.pages\\)]\")",
+      "Bash(python -c \"import pdfplumber; pdf = pdfplumber.open\\('C:/Code/d3-practice-tasks/prev_sessoions/Exercise Slide E01 - Web Technologies.pdf'\\); [print\\(f'--- Page {i+1} ---\\\\n{p.extract_text\\(\\)}'\\) for i, p in enumerate\\(pdf.pages\\)]\")",
+      "Bash(python -c \"import PyPDF2; r = PyPDF2.PdfReader\\('C:/Code/d3-practice-tasks/prev_sessoions/Exercise Slide E01 -  Web Technologies.pdf'\\); [print\\(f'--- Page {i+1} ---\\\\n{r.pages[i].extract_text\\(\\)}'\\) for i in range\\(len\\(r.pages\\)\\)]\")",
+      "Bash(pip install *)",
+      "Bash(python -c \"import pdfplumber; pdf = pdfplumber.open\\('C:/Code/d3-practice-tasks/prev_sessoions/Exercise Slide E01 -  Web Technologies.pdf'\\); [print\\(f'--- Page {i+1} ---\\\\n{p.extract_text\\(\\)}'\\) for i, p in enumerate\\(pdf.pages\\)]\")",
+      "Bash(python *)",
+      "Bash(npm --version)",
+      "Bash(npm install *)",
+      "Bash(npm run *)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:5173/)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:5174/)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:5175/)",
+      "Bash(curl -s http://localhost:5174/)",
+      "Bash(netstat -ano)",
+      "Bash(curl -s -6 \"http://[::1]:5173/\")",
+      "Bash(curl -v -6 \"http://[::1]:5173/\")",
+      "Bash(taskkill //F //PID 13556)",
+      "Bash(curl -s -6 -o /tmp/ix.html -w \"HTTP=%{http_code}\\\\n\" \"http://[::1]:5173/\")",
+      "Read(//tmp/**)",
+      "Bash(curl -s -6 -o /tmp/ex1.html -w \"HTTP=%{http_code}\\\\n\" \"http://[::1]:5173/ex01\")",
+      "Bash(curl -s -6 -o /tmp/ix.html -w \"HTTP=%{http_code} root\\\\n\" \"http://[::1]:5173/\")",
+      "Bash(curl -s -6 -o /tmp/ex1.html -w \"HTTP=%{http_code} ex01\\\\n\" \"http://[::1]:5173/ex01\")",
+      "Bash(curl -s -6 -o /tmp/app.js -w \"HTTP=%{http_code} %{size_download} bytes\\\\n\" \"http://[::1]:5173/@fs/C:/Code/d3-practice-tasks/.svelte-kit/generated/client/app.js\")",
+      "Bash(curl -s -6 -o /tmp/preview.js -w \"HTTP=%{http_code} %{size_download} bytes\\\\n\" \"http://[::1]:5173/src/lib/Preview.svelte\")",
+      "Bash(curl -s -6 -o /dev/null -w '%{http_code}' 'http://[::1]:5173/__TRACKED_VAR__')",
+      "Bash(curl -s -6 -o /dev/null -w \"csv: %{http_code} %{size_download} bytes\\\\n\" \"http://[::1]:5173/data/movies.csv\")",
+      "Bash(curl -s -6 -o /dev/null -w \"json: %{http_code} %{size_download} bytes\\\\n\" \"http://[::1]:5173/data/movies.json\")",
+      "Bash(awk '{print $5}')",
+      "Bash(xargs -I{} taskkill //F //PID {})",
+      "Bash(gh auth *)",
+      "PowerShell(gh auth *)"
+    ]
+  }
+}
