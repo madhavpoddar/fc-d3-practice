@@ -65,8 +65,13 @@
     </nav>
   </header>
 
-  {#if preTaskHtml}
-    <section class="panel prose">{@html preTaskHtml}</section>
+  {#if preTaskHtml || exercise.preImage}
+    <section class="panel prose">
+      {#if exercise.preImage}
+        <img src="{base}/{exercise.preImage}" alt="" class="pre-image"/>
+      {/if}
+      {@html preTaskHtml}
+    </section>
   {/if}
 
   {#each exercise.tasks as task, i (task.id)}
@@ -124,4 +129,5 @@
     border-radius: var(--radius-lg);
     padding: var(--s-5);
   }
+  .pre-image { max-width: 100%; height: auto; display: block; margin: 0 auto var(--s-4); border-radius: var(--radius); }
 </style>

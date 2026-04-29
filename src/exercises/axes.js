@@ -30,7 +30,7 @@ const ifr = { width: 640, height: 400, html: '<svg id="chart" width="620" height
 
 export default {
   id: 'axes',
-  title: 'Axes',
+  title: 'Striving for Axe-llency',
   preTask: `
 A scatterplot without axes is just a cloud of dots. D3 builds axes for you when you give it a scale.
 

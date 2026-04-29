@@ -29,7 +29,7 @@
 <base href="${baseHref}">
 <script src="https://d3js.org/d3.v7.min.js"><\/script>
 <style>
-  body { font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; margin: 16px; color: #1f2540; overflow: hidden; }
+  body { font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; margin: 16px; color: #1f2540; }
   svg { background: #ffffff; }
   ${extraCss}
 <\/style>
@@ -102,7 +102,7 @@ ${safeCode}
     flex-direction: column;
     gap: var(--s-2);
     flex: 1;
-    overflow: hidden;
+    overflow: auto;
   }
   iframe {
     flex: 1;

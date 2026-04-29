@@ -104,7 +104,7 @@
       {/each}
     </div>
 
-    <div class="workspace">
+    <div class="workspace" class:single-pane={task.hidePreview}>
       <div class="pane code-pane">
         <div class="editor-host">
           <CodeEditor
@@ -114,8 +114,9 @@
           />
         </div>
       </div>
+      {#if !task.hidePreview}
       <div class="pane preview-pane">
-        {#if revealed}
+        {#if revealed || task.previewImmediately}
           <div class="iframe-wrap">
             <Preview
               code={task.starterCode}
@@ -130,6 +131,7 @@
           <div class="preview-placeholder">Submit to see the output</div>
         {/if}
       </div>
+      {/if}
     </div>
 
     <div class="task-actions">
@@ -224,6 +226,7 @@
     gap: var(--s-4);
     min-height: 320px;
   }
+  .workspace.single-pane { grid-template-columns: 1fr; max-width: 720px; }
   .pane { display: flex; flex-direction: column; gap: var(--s-2); min-width: 0; }
   .editor-host { flex: 1; min-height: 280px; }
 
