@@ -27,7 +27,7 @@
       A short, hands-on introduction to D3.js. You will edit, fix, and predict the output of small code snippets — practising core concepts like data binding, scales, and loading external data.
     </p>
     <p class="lede">
-      Your progress is saved in this browser. You can export it as a JSON file from the <em>Session</em> menu and load it on another computer.
+      Your progress is saved automatically in this browser. You can export it as a JSON file from the <em>Session</em> menu and load it on another computer.
     </p>
   </div>
 
