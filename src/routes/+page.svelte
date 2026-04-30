@@ -48,12 +48,12 @@
   </ol>
 
   <div class="footnote">
-    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
-      <rect x="1"  y="7"   width="4" height="10" rx="1"/>
-      <rect x="5"  y="9.5" width="2" height="5"  rx="0.5"/>
-      <rect x="7"  y="11"  width="10" height="2"/>
-      <rect x="17" y="9.5" width="2" height="5"  rx="0.5"/>
-      <rect x="19" y="7"   width="4" height="10" rx="1"/>
+    <svg viewBox="0 0 32 16" width="26" height="13" fill="currentColor" aria-hidden="true">
+      <rect x="0"  y="0" width="5" height="16" rx="1.5"/>
+      <rect x="5"  y="4" width="3" height="8"  rx="1"/>
+      <rect x="8"  y="7" width="16" height="2"/>
+      <rect x="24" y="4" width="3" height="8"  rx="1"/>
+      <rect x="27" y="0" width="5" height="16" rx="1.5"/>
     </svg>
     <div class="footnote-lines">
       <span>Grundlagen der Informationsvisualisierung &middot; University of Bamberg</span>
