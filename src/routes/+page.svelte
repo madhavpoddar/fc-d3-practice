@@ -47,7 +47,19 @@
     {/each}
   </ol>
 
-  <p class="footnote">Built for <em>Grundlagen der Informationsvisualisierung</em>, University of Bamberg.</p>
+  <div class="footnote">
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+      <rect x="1"  y="7"   width="4" height="10" rx="1"/>
+      <rect x="5"  y="9.5" width="2" height="5"  rx="0.5"/>
+      <rect x="7"  y="11"  width="10" height="2"/>
+      <rect x="17" y="9.5" width="2" height="5"  rx="0.5"/>
+      <rect x="19" y="7"   width="4" height="10" rx="1"/>
+    </svg>
+    <div class="footnote-lines">
+      <span>Grundlagen der Informationsvisualisierung &middot; University of Bamberg</span>
+      <span>Summer Semester 2026 &middot; Madhav Poddar, Leah Mühlöder, Prof. Dr. Fabian Beck</span>
+    </div>
+  </div>
 </section>
 
 <style>
@@ -108,7 +120,12 @@
 
   .footnote {
     margin-top: var(--s-7);
+    display: flex;
+    align-items: center;
+    gap: var(--s-3);
     color: var(--c-ink-mute);
     font-size: 13px;
   }
+  .footnote svg { flex-shrink: 0; }
+  .footnote-lines { display: flex; flex-direction: column; gap: 2px; }
 </style>
