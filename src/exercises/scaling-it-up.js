@@ -11,7 +11,7 @@ A bar chart needs one scale. A scatterplot needs two — one for x, one for y. A
 The first three tasks build up a scatterplot step by step. Then later go back to a bar chart for trying out the equivalent for categorical values: \`scaleBand\`.
   `.trim(),
   postTask: `
-The charts above are hard to interpret without axes — there's no way to tell which runtime or rating a position actually represents. Next, we'll add axes to make them readable.
+The charts above are hard to interpret without axes — there's no way to tell which runtime or rating a position actually represents. In the next release, we'll look at how to add axes and more.
   `.trim(),
   tasks: [
     {

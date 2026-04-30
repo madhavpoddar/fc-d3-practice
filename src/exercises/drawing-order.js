@@ -98,7 +98,7 @@ The Crimson circle (r=30) is drawn second, on top of Indigo. Then the LightGreen
       id: 'reorder-90-30-60',
       title: 'Now make all three visible',
       description: `
-Same three sizes (90, 30, 60). Change the order of the three circle blocks so **all three circles are visible** as concentric rings.
+Same three sizes (90, 30, 60). Change the order of the three circle blocks in the code below so that **all three circles are visible** as concentric rings.
       `.trim(),
       starterCode: code_90_30_60,
       lockedRanges: [
