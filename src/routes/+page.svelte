@@ -50,8 +50,8 @@
   <div class="footnote">
     <div class="footnote-lines">
       <span>Exercise Session 3 &middot; Flipped Classroom</span>
-      <span>Grundlagen der Informationsvisualisierung &middot; University of Bamberg</span>
-      <span>Summer Semester 2026 &middot; <strong>Madhav Poddar</strong>, Leah Mühlöder, Prof. Dr. Fabian Beck</span>
+      <span>Summer Semester 2026 &middot; Grundlagen der Informationsvisualisierung</span>
+      <span><strong>Madhav Poddar</strong>, Leah Mühlöder, Prof. Dr. Fabian Beck &middot; University of Bamberg</span>
     </div>
   </div>
 </section>
