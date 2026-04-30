@@ -24,7 +24,7 @@
   <div class="hero">
     <h1>D3 Practice Tasks</h1>
     <p class="lede">
-      A short, hands-on tour of D3.js. You will edit, fix, and predict the output of small code snippets — and build up to a custom data visualization. About <strong>90 minutes</strong>.
+      A short, hands-on introduction to D3.js. You will edit, fix, and predict the output of small code snippets — practising core concepts like data binding, scales, and loading external data. About <strong>90 minutes</strong>.
     </p>
     <p class="lede">
       Your progress is saved in this browser. You can export it as a JSON file from the <em>Session</em> menu and load it on another computer.
@@ -58,7 +58,7 @@
   }
   .hero { margin-bottom: var(--s-7); }
   .hero h1 { font-size: 40px; margin-bottom: var(--s-3); }
-  .lede { font-size: 17px; color: var(--c-ink-soft); max-width: 60ch; }
+  .lede { font-size: 17px; color: var(--c-ink-soft); }
   /* Exercise list */
   .list {
     list-style: none;
