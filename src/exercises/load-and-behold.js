@@ -12,7 +12,7 @@ const movies = [
 ];
 \`\`\`
 
-When you bind data(\`movies\`)\`, each \`d\` is a **whole object**, not a number (that is each datum contains multiple fields  - title, genre, runtime, rating). To get one of the fields, write \`d.<fieldName>\` such as \`d.rating\`. 
+When you bind \`data(movies)\`, each \`d\` is a **whole object**, not a number (that is, each datum contains multiple fields — title, genre, runtime, rating). To get one of the fields, write \`d.fieldName\` such as \`d.rating\`.
   `.trim(),
   postTask: `
 Note: \`d3.csv()\` returns everything as **strings** — \`d.runtime\` will be the string \`'99'\`, not the number \`99\`. Convert it with \`+d.runtime\`. For instance, \`.attr("cx", d => d.runtime + 30)\` should be replaced by \`.attr("cy", d => +d.runtime + 30)\`. 

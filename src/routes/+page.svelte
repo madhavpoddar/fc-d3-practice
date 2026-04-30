@@ -13,7 +13,7 @@
       const t = exP?.tasks?.[task.id];
       if (!t) return 'todo';
       if (task.type === 'mcq') return t.revealed ? 'done' : (t.selectedAnswer ? 'started' : 'todo');
-      if (exP?.completed || t.submitted) return 'done';
+      if (exP?.completed || t.submitted || t.everSubmitted) return 'done';
       if (t.code != null || t.hintRevealed) return 'started';
       return 'todo';
     });

@@ -11,7 +11,7 @@ A bar chart needs one scale. A scatterplot needs two — one for x, one for y. A
 The first three tasks build up a scatterplot step by step. Then later go back to a bar chart for trying out the equivalent for categorical values: \`scaleBand\`.
   `.trim(),
   postTask: `
-\`d3.extent(arr, accessor)\` is shorthand for \`[d3.min(arr, acc), d3.max(arr, acc)]\`.
+The charts above are hard to interpret without axes — there's no way to tell which runtime or rating a position actually represents. Next, we'll add axes to make them readable.
   `.trim(),
   tasks: [
     {
@@ -169,7 +169,7 @@ The first three tasks build up a scatterplot step by step. Then later go back to
       title: 'Compute the domain from the data',
       description: `Hardcoded domains break when the data(\`JSON\`) changes. Replace the \`.domain([...])\` for \`yScale\` to use either \`d3.extent\` or compute the \`d3.min\` and \`d3.max\` functions (like the sample solution for task 2) on the \`rating\` field. Observe the impact.
 
-      \`d3.extent(arr, accessor)\` is shorthand for \`[d3.min(arr, acc), d3.max(arr, acc)]\`.
+\`d3.extent(arr, accessor)\` is shorthand for \`[d3.min(arr, accessor), d3.max(arr, accessor)]\`.
 `,
       starterCode: `d3.json("data/movies.json").then(movies => {
 
@@ -328,46 +328,34 @@ The first three tasks build up a scatterplot step by step. Then later go back to
         { from: 28, to: 99 }
       ],
       hint: 'Bug 1: I intentionally did not use the extent function here. Bug 2: The y attribute is perfectly correct, but the height is wrong.',
-      solutionNote: `**Bug 1 — domain must start at 0:** \`domain([min, max])\` maps the minimum count to the baseline and the maximum count to y = 0 (screen top). Combined with the height bug, bars at both extremes become invisible — only the middle values show. Always anchor a bar chart's y-domain at \`0\`.
-
-**Bug 2 — calculating height with an inverted y-axis:**
-
-<svg width="340" height="420" viewBox="0 0 340 420" style="display:block;margin:10px 0;font-family:system-ui,sans-serif;font-size:12px;">
-  <rect x="8" y="8" width="324" height="404" fill="#f8f9fb" stroke="#d6dae4" stroke-width="1" rx="8"/>
-  <text x="170" y="30" text-anchor="middle" font-size="12" font-weight="600" fill="#4a5568">Bug 2: bar height with an inverted y-axis</text>
-  <text x="170" y="46" text-anchor="middle" font-size="10" fill="#9aa5b4">count = 3, max = 4 · yScale(3) = 75 · yScale(0) = 300</text>
-  <line x1="52" y1="56" x2="52" y2="362" stroke="#b0bac8" stroke-width="1.5"/>
-  <line x1="48" y1="60" x2="56" y2="60" stroke="#9aa5b4" stroke-width="1.5"/>
-  <text x="43" y="64" text-anchor="end" fill="#9aa5b4" font-size="11">0</text>
-  <line x1="56" y1="60" x2="218" y2="60" stroke="#d6dae4" stroke-width="1" stroke-dasharray="3,3"/>
-  <text x="221" y="64" text-anchor="start" fill="#9aa5b4" font-size="10" font-style="italic">screen top</text>
-  <line x1="48" y1="134" x2="56" y2="134" stroke="#e36588" stroke-width="2"/>
-  <text x="43" y="138" text-anchor="end" fill="#e36588" font-size="11" font-weight="600">75</text>
-  <line x1="56" y1="134" x2="218" y2="134" stroke="#e36588" stroke-width="1" stroke-dasharray="4,3"/>
-  <text x="221" y="138" text-anchor="start" fill="#e36588" font-size="10">bar top  (.attr("y", yScale(d.count)))</text>
-  <line x1="48" y1="207" x2="56" y2="207" stroke="#b03030" stroke-width="1" stroke-dasharray="3,2"/>
-  <text x="43" y="211" text-anchor="end" fill="#b03030" font-size="10">150</text>
-  <line x1="56" y1="207" x2="128" y2="207" stroke="#b03030" stroke-width="1" stroke-dasharray="3,2"/>
-  <line x1="48" y1="354" x2="56" y2="354" stroke="#5b7fa6" stroke-width="2"/>
-  <text x="43" y="358" text-anchor="end" fill="#5b7fa6" font-size="11" font-weight="600">300</text>
-  <line x1="56" y1="354" x2="218" y2="354" stroke="#5b7fa6" stroke-width="1.5"/>
-  <text x="221" y="358" text-anchor="start" fill="#5b7fa6" font-size="10">baseline  (yScale(0))</text>
-  <text x="98" y="118" text-anchor="middle" font-size="11" fill="#b03030" font-weight="600">✗ wrong</text>
-  <rect x="68" y="134" width="60" height="73" fill="#e36588" fill-opacity="0.15" stroke="#e36588" stroke-width="1.5" stroke-dasharray="5,3"/>
-  <line x1="132" y1="134" x2="136" y2="134" stroke="#e36588" stroke-width="1.5"/>
-  <line x1="134" y1="134" x2="134" y2="207" stroke="#e36588" stroke-width="1.5"/>
-  <line x1="132" y1="207" x2="136" y2="207" stroke="#e36588" stroke-width="1.5"/>
-  <text x="139" y="175" text-anchor="start" fill="#b03030" font-size="11" font-weight="600">75</text>
-  <text x="98" y="374" text-anchor="middle" font-size="10" fill="#b03030">yScale(d.count)</text>
-  <text x="98" y="388" text-anchor="middle" font-size="10" fill="#b03030">= 75  (too short)</text>
-  <text x="190" y="118" text-anchor="middle" font-size="11" fill="#1e6c34" font-weight="600">✓ correct</text>
-  <rect x="160" y="134" width="60" height="220" fill="#2b3a55" fill-opacity="0.15" stroke="#2b3a55" stroke-width="1.5"/>
-  <line x1="224" y1="134" x2="228" y2="134" stroke="#5b7fa6" stroke-width="1.5"/>
-  <line x1="226" y1="134" x2="226" y2="354" stroke="#5b7fa6" stroke-width="1.5"/>
-  <line x1="224" y1="354" x2="228" y2="354" stroke="#5b7fa6" stroke-width="1.5"/>
-  <text x="231" y="248" text-anchor="start" fill="#1e5c8e" font-size="11" font-weight="600">225</text>
-  <text x="190" y="374" text-anchor="middle" font-size="10" fill="#1e5c8e">yScale(0) − yScale(d.count)</text>
-  <text x="190" y="388" text-anchor="middle" font-size="10" fill="#1e5c8e">= 300 − 75 = 225 ✓</text>
+      solutionNote: `
+<svg width="520" height="430" viewBox="0 0 520 430" style="display:block;margin:10px 0;font-family:system-ui,sans-serif;font-size:12px;">
+  <rect x="8" y="8" width="504" height="414" fill="#f8f9fb" stroke="#d6dae4" stroke-width="1" rx="8"/>
+  <line x1="70" y1="58" x2="70" y2="378" stroke="#b0bac8" stroke-width="1.5"/>
+  <line x1="66" y1="70" x2="74" y2="70" stroke="#9aa5b4" stroke-width="1.5"/>
+  <text x="60" y="74" text-anchor="end" fill="#9aa5b4" font-size="11">0</text>
+  <line x1="74" y1="70" x2="370" y2="70" stroke="#d6dae4" stroke-width="1" stroke-dasharray="3,3"/>
+  <text x="374" y="74" font-size="10" fill="#9aa5b4" font-style="italic">screen top</text>
+  <line x1="66" y1="145" x2="74" y2="145" stroke="#e36588" stroke-width="2"/>
+  <text x="60" y="149" text-anchor="end" fill="#e36588" font-size="11" font-weight="600">75</text>
+  <line x1="74" y1="145" x2="370" y2="145" stroke="#e36588" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <text x="374" y="149" font-size="10" fill="#e36588">bar top</text>
+  <text x="374" y="161" font-size="9" fill="#e36588" font-style="italic">.attr("y", yScale(d.count))</text>
+  <line x1="66" y1="370" x2="74" y2="370" stroke="#5b7fa6" stroke-width="2"/>
+  <text x="60" y="374" text-anchor="end" fill="#5b7fa6" font-size="11" font-weight="600">300</text>
+  <line x1="74" y1="370" x2="370" y2="370" stroke="#5b7fa6" stroke-width="1.5"/>
+  <text x="374" y="374" font-size="10" fill="#5b7fa6">baseline  (yScale(0))</text>
+  <text x="128" y="116" text-anchor="middle" font-size="11" fill="#b03030" font-weight="600">✗ wrong</text>
+  <rect x="88" y="145" width="80" height="75" fill="#e36588" fill-opacity="0.15" stroke="#e36588" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="128" y="189" text-anchor="middle" font-size="15" fill="#c03050" font-weight="700">75</text>
+  <text x="330" y="116" text-anchor="middle" font-size="11" fill="#1e6c34" font-weight="600">✓ correct</text>
+  <rect x="290" y="145" width="80" height="225" fill="#2b3a55" fill-opacity="0.15" stroke="#2b3a55" stroke-width="1.5"/>
+  <text x="330" y="264" text-anchor="middle" font-size="15" fill="#1e5c8e" font-weight="700">225</text>
+  <line x1="80" y1="382" x2="450" y2="382" stroke="#e0e5ef" stroke-width="1"/>
+  <text x="128" y="397" text-anchor="middle" font-size="10" fill="#c03050">height = yScale(d.count)</text>
+  <text x="128" y="411" text-anchor="middle" font-size="10" fill="#c03050">= 75  ✗  (too short)</text>
+  <text x="330" y="397" text-anchor="middle" font-size="10" fill="#1e5c8e">height = yScale(0) − yScale(d.count)</text>
+  <text x="330" y="411" text-anchor="middle" font-size="10" fill="#1e5c8e">= 300 − 75 = 225  ✓</text>
 </svg>`,
       solution: `d3.json("data/movies.json").then(movies => {
 

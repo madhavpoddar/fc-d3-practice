@@ -110,7 +110,7 @@
           <CodeEditor
             value={task.starterCode}
             readOnly={true}
-            lockedRanges={[]}
+            lockedRanges={[{ from: 1, to: 9999 }]}
           />
         </div>
       </div>
