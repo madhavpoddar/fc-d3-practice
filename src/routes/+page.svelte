@@ -31,8 +31,6 @@
     </p>
   </div>
 
-  <h2>Exercises</h2>
-
   <ol class="list">
     {#each exercises as ex, i}
       <li>
@@ -61,8 +59,6 @@
   .hero { margin-bottom: var(--s-7); }
   .hero h1 { font-size: 40px; margin-bottom: var(--s-3); }
   .lede { font-size: 17px; color: var(--c-ink-soft); max-width: 60ch; }
-  h2 { margin-top: var(--s-6); margin-bottom: var(--s-3); }
-
   /* Exercise list */
   .list {
     list-style: none;
