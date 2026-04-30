@@ -1,22 +1,22 @@
 <script>
   import { base } from '$app/paths';
   import { exercises } from '../exercises/index.js';
-  import { onMount } from 'svelte';
+  import { afterNavigate } from '$app/navigation';
   import { readState } from '$lib/progress.js';
 
-  let progress = { exercises: {}, lastVisited: null };
-  onMount(() => { progress = readState(); });
+  let progress = readState();
+  afterNavigate(() => { progress = readState(); });
 
-  function statusFor(id) {
-    const p = progress.exercises[id];
-    if (p?.completed) return 'done';
-    const tasks = p?.tasks ?? {};
-    if (Object.values(tasks).some((t) => t?.code != null || t?.hintRevealed)) return 'started';
-    return 'todo';
-  }
-
-  function taskCount(ex) {
-    return ex.tasks?.length ?? 1;
+  function taskDots(ex) {
+    const exP = progress.exercises[ex.id];
+    return ex.tasks.map(task => {
+      const t = exP?.tasks?.[task.id];
+      if (!t) return 'todo';
+      if (task.type === 'mcq') return t.revealed ? 'done' : (t.selectedAnswer ? 'started' : 'todo');
+      if (exP?.completed || t.submitted) return 'done';
+      if (t.code != null || t.hintRevealed) return 'started';
+      return 'todo';
+    });
   }
 </script>
 
@@ -32,15 +32,18 @@
   </div>
 
   <h2>Exercises</h2>
+
   <ol class="list">
     {#each exercises as ex, i}
-      {@const status = statusFor(ex.id)}
       <li>
-        <a class="row {status}" href="{base}/{ex.id}">
+        <a class="row" href="{base}/{ex.id}">
           <span class="num">{String(i + 1).padStart(2, '0')}</span>
           <span class="title">{ex.title}</span>
-          <span class="tasks">{taskCount(ex) > 1 ? `${taskCount(ex)} tasks` : ''}</span>
-          <span class="status">{status === 'done' ? '✓ Done' : status === 'started' ? 'In progress' : ''}</span>
+          <span class="task-dots">
+            {#each taskDots(ex) as s}
+              <span class="dot {s}"></span>
+            {/each}
+          </span>
         </a>
       </li>
     {/each}
@@ -59,6 +62,8 @@
   .hero h1 { font-size: 40px; margin-bottom: var(--s-3); }
   .lede { font-size: 17px; color: var(--c-ink-soft); max-width: 60ch; }
   h2 { margin-top: var(--s-6); margin-bottom: var(--s-3); }
+
+  /* Exercise list */
   .list {
     list-style: none;
     padding: 0;
@@ -69,7 +74,7 @@
   }
   .row {
     display: grid;
-    grid-template-columns: 48px 1fr auto auto;
+    grid-template-columns: 48px 1fr auto;
     gap: var(--s-4);
     align-items: center;
     padding: var(--s-4);
@@ -80,12 +85,6 @@
     color: var(--c-ink);
     transition: border-color 0.15s, transform 0.06s;
   }
-  .tasks {
-    font-size: 12px;
-    color: var(--c-ink-mute);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-  }
   .row:hover { border-color: var(--c-primary); transform: translateX(2px); }
   .num {
     font-family: var(--font-mono);
@@ -93,8 +92,24 @@
     font-size: 14px;
   }
   .title { font-weight: 500; }
-  .status { font-size: 13px; color: var(--c-ink-soft); }
-  .row.done .num { color: var(--c-good); }
+
+  /* Per-task dot strip */
+  .task-dots {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+  }
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    border: 1.5px solid var(--c-line);
+    background: var(--c-surface-2);
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .dot.started { background: var(--c-accent-2); border-color: var(--c-accent-2); }
+  .dot.done    { background: var(--c-good);     border-color: var(--c-good); }
+
   .footnote {
     margin-top: var(--s-7);
     color: var(--c-ink-mute);

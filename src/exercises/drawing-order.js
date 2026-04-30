@@ -66,7 +66,7 @@ export default {
   id: 'drawing-order',
   title: "Bull's Eye!",
   preTask: `
-**D3 draws shapes in the order they appear in the code.** The first shape is drawn first. Later shapes are painted on top of earlier ones. This is called the *painter's algorithm*. This becomes particularly important when the shapes overlap.
+**D3 draws shapes in the order they appear in the code.** The first shape is drawn first. Later shapes are painted on top of earlier ones. This is called the *painter's algorithm*. This becomes particularly important when the shapes start overlapping.
   `.trim(),
 //   postTask: `
 // This idea is everywhere in D3. When you bind data with \`.data(arr).enter().append(...)\`, the elements appear in the order of the array. To put a shape on top, append it last.

@@ -1,13 +1,21 @@
-title,genre,runtime,imdb,boxOffice
+title,genre,runtime,rating,boxOffice
+A Quiet Place,Horror,90,7.5,340
 The Grand Budapest Hotel,Comedy,99,8.1,175
+Game Night,Comedy,100,7.0,117
 Get Out,Horror,104,7.7,255
 Coco,Animation,105,8.4,807
+Whiplash,Drama,107,8.5,49
+Arrival,Sci-Fi,116,7.9,203
+Spider-Man: Into the Spider-Verse,Animation,117,8.4,375
 Mad Max: Fury Road,Action,120,8.1,375
+Hereditary,Horror,127,7.3,44
 La La Land,Drama,128,8.0,446
 Knives Out,Mystery,130,7.9,311
 Parasite,Thriller,132,8.5,258
 Everything Everywhere All at Once,Sci-Fi,139,7.8,72
 Inception,Sci-Fi,148,8.8,836
+Gone Girl,Mystery,149,8.1,369
 The Dark Knight,Action,152,9.0,1005
+Prisoners,Thriller,153,8.1,122
 Interstellar,Sci-Fi,169,8.6,773
 Oppenheimer,Drama,180,8.3,952

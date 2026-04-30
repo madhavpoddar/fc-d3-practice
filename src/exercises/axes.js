@@ -1,17 +1,17 @@
 // Axes — two related tasks.
 
-const sharedHead = `d3.csv("data/movies.csv").then(movies => {
+const sharedHead = `d3.json("data/movies.json").then(movies => {
   const width = 620, height = 360;
   const margin = { top: 20, right: 30, bottom: 50, left: 50 };
   const innerWidth  = width  - margin.left - margin.right;
   const innerHeight = height - margin.top  - margin.bottom;
 
   const xScale = d3.scaleLinear()
-    .domain(d3.extent(movies, d => +d.runtime)).nice()
+    .domain(d3.extent(movies, d => d.runtime)).nice()
     .range([0, innerWidth]);
 
   const yScale = d3.scaleLinear()
-    .domain(d3.extent(movies, d => +d.imdb)).nice()
+    .domain(d3.extent(movies, d => d.rating)).nice()
     .range([innerHeight, 0]);
 
   const svg = d3.select("#chart");
@@ -20,8 +20,8 @@ const sharedHead = `d3.csv("data/movies.csv").then(movies => {
 
   inner.selectAll("circle")
     .data(movies).join("circle")
-    .attr("cx", d => xScale(+d.runtime))
-    .attr("cy", d => yScale(+d.imdb))
+    .attr("cx", d => xScale(d.runtime))
+    .attr("cy", d => yScale(d.rating))
     .attr("r", 6)
     .attr("fill", "#2b3a55").attr("fill-opacity", 0.7);
 `;
@@ -46,7 +46,9 @@ There are four builders: \`axisBottom\`, \`axisTop\`, \`axisLeft\`, \`axisRight\
 The starter code already uses the **margin convention** — a common pattern. It has a \`margin = {top, right, bottom, left}\` object, an inner \`<g>\` translated by \`(margin.left, margin.top)\`, and \`innerWidth\` / \`innerHeight\` for everything inside.
   `.trim(),
   postTask: `
-The margin convention is not a D3 thing. It is a pattern that almost every D3 chart uses. Stick to it and your charts will look polished without much effort.
+\`.nice()\` belongs to the scale, not the axis — it rounds the domain outward so ticks land on clean values.
+
+The margin convention is not a D3 thing either. It is a pattern that almost every D3 chart uses. Stick to both and your charts will look polished without much effort.
   `.trim(),
   tasks: [
     {
@@ -61,6 +63,84 @@ The margin convention is not a D3 thing. It is a pattern that almost every D3 ch
       lockedRanges: [{ from: 1, to: 26 }],
       hint: 'inner.append("g").attr("transform", `translate(0, ${innerHeight})`).call(d3.axisBottom(xScale));   inner.append("g").call(d3.axisLeft(yScale));',
       solution: `${sharedHead}
+  inner.append("g")
+    .attr("transform", \`translate(0, \${innerHeight})\`)
+    .call(d3.axisBottom(xScale));
+
+  inner.append("g")
+    .call(d3.axisLeft(yScale));
+});
+`,
+      iframe: ifr
+    },
+    {
+      id: 'add-nice',
+      title: 'Round to nice tick values',
+      description: 'Look at the axis tick values — they land on irregular numbers. Add `.nice()` after each `.range(...)` call and watch the ticks snap to clean round values.',
+      starterCode: `d3.json("data/movies.json").then(movies => {
+  const width = 620, height = 360;
+  const margin = { top: 20, right: 30, bottom: 50, left: 50 };
+  const innerWidth  = width  - margin.left - margin.right;
+  const innerHeight = height - margin.top  - margin.bottom;
+
+  const xScale = d3.scaleLinear()
+    .domain(d3.extent(movies, d => d.runtime))
+    .range([0, innerWidth]);                    // <-- add .nice()
+
+  const yScale = d3.scaleLinear()
+    .domain(d3.extent(movies, d => d.rating))
+    .range([innerHeight, 0]);                   // <-- add .nice()
+
+  const svg = d3.select("#chart");
+  const inner = svg.append("g")
+    .attr("transform", \`translate(\${margin.left}, \${margin.top})\`);
+
+  inner.selectAll("circle")
+    .data(movies).join("circle")
+    .attr("cx", d => xScale(d.runtime))
+    .attr("cy", d => yScale(d.rating))
+    .attr("r", 6)
+    .attr("fill", "#2b3a55").attr("fill-opacity", 0.7);
+
+  inner.append("g")
+    .attr("transform", \`translate(0, \${innerHeight})\`)
+    .call(d3.axisBottom(xScale));
+
+  inner.append("g")
+    .call(d3.axisLeft(yScale));
+});
+`,
+      lockedRanges: [
+        { from: 1, to: 8 },
+        { from: 10, to: 12 },
+        { from: 14, to: 32 }
+      ],
+      hint: 'Add `.nice()` after `.range(...)` on both scales.',
+      solution: `d3.json("data/movies.json").then(movies => {
+  const width = 620, height = 360;
+  const margin = { top: 20, right: 30, bottom: 50, left: 50 };
+  const innerWidth  = width  - margin.left - margin.right;
+  const innerHeight = height - margin.top  - margin.bottom;
+
+  const xScale = d3.scaleLinear()
+    .domain(d3.extent(movies, d => d.runtime))
+    .range([0, innerWidth]).nice();
+
+  const yScale = d3.scaleLinear()
+    .domain(d3.extent(movies, d => d.rating))
+    .range([innerHeight, 0]).nice();
+
+  const svg = d3.select("#chart");
+  const inner = svg.append("g")
+    .attr("transform", \`translate(\${margin.left}, \${margin.top})\`);
+
+  inner.selectAll("circle")
+    .data(movies).join("circle")
+    .attr("cx", d => xScale(d.runtime))
+    .attr("cy", d => yScale(d.rating))
+    .attr("r", 6)
+    .attr("fill", "#2b3a55").attr("fill-opacity", 0.7);
+
   inner.append("g")
     .attr("transform", \`translate(0, \${innerHeight})\`)
     .call(d3.axisBottom(xScale));

@@ -2,36 +2,25 @@
 
 import drawingOrder    from './drawing-order.js';
 import barOrientation  from './bar-orientation.js';
-// import enterVsJoin     from './enter-vs-join.js';
-// import styleVsAttr     from './style-vs-attr.js';
-import dataAsObjects   from './data-as-objects.js';
-import loadingData     from './loading-data.js';
+import loadAndBehold   from './load-and-behold.js';
 import scalingItUp     from './scaling-it-up.js';
-// import twoScales       from './two-scales.js';
-// import scalebandEx     from './scaleband.js';
-import axes            from './axes.js';
-import colorByCategory from './color-by-category.js';
-import groupPerDatum   from './group-per-datum.js';
-import smiley          from './smiley.js';
-import lineChart       from './line-chart.js';
-import bonus           from './bonus.js';
+// import axes            from './axes.js';
+// import colorByCategory from './color-by-category.js';
+// import groupPerDatum   from './group-per-datum.js';
+// import smiley          from './smiley.js';
+// import bonus           from './bonus.js';
+// import lineChart       from './line-chart.js';  // not in current curriculum
 
 const raw = [
   drawingOrder,
   barOrientation,
-  // enterVsJoin,
-  // styleVsAttr,
-  dataAsObjects,
-  loadingData,
+  loadAndBehold,
   scalingItUp,
-  // twoScales,
-  // scalebandEx,
-  axes,
-  colorByCategory,
-  groupPerDatum,
-  smiley,
-  lineChart,
-  bonus
+  // axes,
+  // colorByCategory,
+  // groupPerDatum,
+  // smiley,
+  // bonus,
 ];
 
 /** Normalize an exercise config so it always has a tasks[] array.

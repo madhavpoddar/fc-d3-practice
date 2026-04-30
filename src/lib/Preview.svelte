@@ -1,3 +1,9 @@
+<script module>
+  // Shared across all Preview instances — guarantees unique run IDs so an
+  // error postMessage from one iframe never matches another instance's runId.
+  let nextRunId = 0;
+</script>
+
 <script>
   import { onMount, onDestroy } from 'svelte';
   import { base } from '$app/paths';
@@ -14,10 +20,9 @@
 
   /** @type {HTMLIFrameElement} */ let iframe;
   /** @type {{message: string, line?: number}|null} */ let runtimeError = null;
+  let currentRunId = 0;
 
-  function buildSrcdoc(userCode) {
-    // D3 served via CDN — same as the slides (E02). Students can also see it loaded if they view-source the iframe.
-    // <base> points relative URLs (like "data/movies.csv") at the parent app's origin, so d3.csv works.
+  function buildSrcdoc(userCode, runId) {
     const safeCode = userCode ?? '';
     const baseHref = typeof window !== 'undefined'
       ? `${window.location.origin}${base}/`
@@ -37,16 +42,17 @@
 <body>
 ${bodyHtml}
 <script>
+var __runId = ${runId};
 window.addEventListener('error', function(e) {
-  parent.postMessage({ __d3p: true, type: 'error', message: e.message, line: e.lineno }, '*');
+  parent.postMessage({ __d3p: true, runId: __runId, type: 'error', message: e.message, line: e.lineno }, '*');
 });
 window.addEventListener('unhandledrejection', function(e) {
-  parent.postMessage({ __d3p: true, type: 'error', message: 'Unhandled promise rejection: ' + (e.reason && e.reason.message || e.reason) }, '*');
+  parent.postMessage({ __d3p: true, runId: __runId, type: 'error', message: 'Unhandled promise rejection: ' + (e.reason && e.reason.message || e.reason) }, '*');
 });
 try {
 ${safeCode}
 } catch (err) {
-  parent.postMessage({ __d3p: true, type: 'error', message: err.message, line: err.lineNumber }, '*');
+  parent.postMessage({ __d3p: true, runId: __runId, type: 'error', message: err.message, line: err.lineNumber }, '*');
 }
 <\/script>
 <\/body>
@@ -55,6 +61,7 @@ ${safeCode}
 
   function handleMessage(event) {
     if (!event?.data || event.data.__d3p !== true) return;
+    if (event.data.runId !== currentRunId) return;
     if (event.data.type === 'error') {
       runtimeError = { message: event.data.message, line: event.data.line };
     }
@@ -67,7 +74,7 @@ ${safeCode}
     // run() call from the parent's onMount: setting srcdoc on an iframe
     // restarts its document, and two writes in the same microtask can leave
     // the iframe blank.
-    if (iframe) iframe.srcdoc = buildSrcdoc(code);
+    run(code);
   });
   onDestroy(() => {
     window.removeEventListener('message', handleMessage);
@@ -77,8 +84,9 @@ ${safeCode}
    *  Pass `latestCode` explicitly to avoid any prop-propagation lag from the parent. */
   export function run(latestCode) {
     runtimeError = null;
+    currentRunId = ++nextRunId;
     const useCode = latestCode != null ? latestCode : code;
-    if (iframe) iframe.srcdoc = buildSrcdoc(useCode);
+    if (iframe) iframe.srcdoc = buildSrcdoc(useCode, currentRunId);
   }
 </script>
 

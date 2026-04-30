@@ -115,7 +115,7 @@
         }),
         EditorView.theme({
           '&': { height: '100%', fontSize: '13.5px' },
-          '.cm-scroller': { fontFamily: 'var(--font-mono)' },
+          '.cm-scroller': { fontFamily: 'var(--font-mono)', fontFeatureSettings: '"liga" 0, "calt" 0' },
           '.cm-content': { padding: '12px 0' },
           '.cm-locked-line': { backgroundColor: 'var(--c-locked)' },
           '.cm-gutters': { backgroundColor: 'var(--c-surface-2)', border: 'none', color: 'var(--c-ink-mute)' },
@@ -148,7 +148,7 @@
   }
 </script>
 
-<div class="editor" bind:this={container}></div>
+<div class="editor" class:read-only={readOnly} bind:this={container}></div>
 
 <style>
   .editor {
@@ -164,4 +164,6 @@
     outline: 2px solid var(--c-primary);
     outline-offset: -2px;
   }
+  .read-only :global(.cm-editor.cm-focused) { outline: none; }
+  .read-only :global(.cm-content) { cursor: default; }
 </style>

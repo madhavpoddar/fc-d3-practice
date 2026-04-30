@@ -3,10 +3,14 @@
 
   let open = false;
   /** @type {HTMLInputElement} */ let fileInput;
+  /** @type {HTMLDivElement} */ let wrap;
   let importStatus = '';
 
   function toggle() { open = !open; }
-  function close() { open = false; }
+
+  function handleWindowClick(e) {
+    if (open && !wrap.contains(e.target)) open = false;
+  }
 
   async function onImport(event) {
     const file = event.target.files?.[0];
@@ -30,7 +34,8 @@
   }
 </script>
 
-<div class="wrap" on:mouseleave={close} role="presentation">
+<svelte:window on:click={handleWindowClick} />
+<div class="wrap" bind:this={wrap} role="presentation">
   <button class="ghost" on:click={toggle} aria-haspopup="menu" aria-expanded={open}>
     Session ▾
   </button>

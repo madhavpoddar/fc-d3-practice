@@ -150,6 +150,9 @@
           <strong>Not quite — the answer is "{correctOption?.label}".</strong>
         {/if}
         {#if explanationHtml}<div class="prose explanation">{@html explanationHtml}</div>{/if}
+        {#if task.explanationImage}
+          <img src="{base}/{task.explanationImage}" alt="Explanation screenshot" class="explanation-img" />
+        {/if}
       </div>
     {/if}
   </section>
@@ -297,6 +300,13 @@
   .feedback.good { background: #e7f6ec; border-color: var(--c-good); color: #1e6c34; }
   .feedback strong { display: inline-block; }
   .feedback .explanation { margin-top: var(--s-2); color: var(--c-ink); }
+  .explanation-img {
+    display: block;
+    margin-top: var(--s-3);
+    max-width: 100%;
+    border-radius: var(--radius);
+    border: 1px solid var(--c-line);
+  }
 
   @media (max-width: 1024px) {
     .workspace { grid-template-columns: 1fr; }

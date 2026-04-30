@@ -39,13 +39,12 @@ A CSV file is at \`data/movies.csv\`. Open dev tools → Network tab and click R
     .attr("cx", /* TODO */ 0)
     .attr("cy", 80)
     .attr("r",  /* TODO */ 5)
-    .attr("fill", "#2b3a55")
+    .attr("fill", "indigo")
     .attr("fill-opacity", 0.5);
 });
 `,
       lockedRanges: [
         { from: 1, to: 7 },
-        { from: 10, to: 10 },
         { from: 12, to: 14 }
       ],
       hint: 'cx: `d => +d.runtime`. r: `d => +d.imdb * 4`. The plus sign converts strings to numbers.',
@@ -59,7 +58,7 @@ A CSV file is at \`data/movies.csv\`. Open dev tools → Network tab and click R
     .attr("cx", d => +d.runtime)
     .attr("cy", 80)
     .attr("r",  d => +d.imdb * 4)
-    .attr("fill", "#2b3a55")
+    .attr("fill", "indigo")
     .attr("fill-opacity", 0.5);
 });
 `,

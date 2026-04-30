@@ -50,7 +50,8 @@
 
   function reset() {
     code = task.starterCode;
-    updateTaskProgress(exerciseId, task.id, { code: null });
+    submitted = false;
+    updateTaskProgress(exerciseId, task.id, { code: null, submitted: false });
     runPreview();
   }
 
@@ -61,7 +62,8 @@
 
   function handleSubmit() {
     submitted = true;
-    updateTaskProgress(exerciseId, task.id, { submitted: true });
+    // everSubmitted is never cleared by Reset — it guards task unlocking in ExerciseShell.
+    updateTaskProgress(exerciseId, task.id, { submitted: true, everSubmitted: true });
     dispatch('submit');
   }
 
@@ -87,6 +89,7 @@
   $: iframeBody   = task.iframe?.html   ?? '<svg id="chart" width="600" height="400"></svg>';
   $: iframeCss    = task.iframe?.extraCSS ?? '';
   $: descriptionHtml = task.description ? marked.parse(task.description) : '';
+  $: solutionNoteHtml = task.solutionNote ? marked.parse(task.solutionNote) : '';
   $: solutions = Array.isArray(task.solution)
     ? task.solution
     : task.solution ? [task.solution] : [];
@@ -143,7 +146,7 @@
     </div>
 
     <div class="task-actions">
-      <button class="submit-btn" on:click={handleSubmit}>Submit</button>
+      <button class="submit-btn" on:click={handleSubmit} disabled={submitted}>Submit</button>
       {#if task.hint && !hintRevealed}
         <button class="ghost" on:click={showHint}>Show hint</button>
       {/if}
@@ -157,7 +160,7 @@
       <div class="solution-section">
         <div class="solution-header">
           <strong>Sample solution{solutions.length > 1 ? 's' : ''}</strong>
-          <p class="verify-note">Check if your output looks similar. There are often multiple valid approaches — the important thing is that your result looks correct.</p>
+          <p class="verify-note">Check if your code/output looks similar. Note: there are often multiple valid approaches.</p>
         </div>
         {#each solutions as sol, si}
           {#if solutions.length > 1}
@@ -165,7 +168,7 @@
           {/if}
           <div class="sol-block">
             <div class="sol-editor-wrap">
-              <CodeEditor value={sol} readOnly={true} lockedRanges={[]} />
+              <CodeEditor value={sol} readOnly={true} lockedRanges={[{ from: 1, to: 9999 }]} />
             </div>
             <div class="sol-preview-wrap">
               <div class="iframe-wrap">
@@ -181,6 +184,9 @@
             </div>
           </div>
         {/each}
+        {#if solutionNoteHtml}
+          <div class="solution-note prose">{@html solutionNoteHtml}</div>
+        {/if}
       </div>
     {/if}
   </section>
@@ -290,9 +296,10 @@
     font-weight: 600;
     font-size: 14px;
     cursor: pointer;
-    transition: filter 0.12s;
+    transition: filter 0.12s, opacity 0.2s;
   }
-  .submit-btn:hover { filter: brightness(0.92); }
+  .submit-btn:hover:not(:disabled) { filter: brightness(0.92); }
+  .submit-btn:disabled { opacity: 0.35; cursor: default; }
 
   .hint {
     background: #fff7e0;
@@ -308,6 +315,12 @@
     gap: var(--s-4);
     padding-top: var(--s-4);
     border-top: 1px solid var(--c-line);
+  }
+  .solution-note {
+    padding: var(--s-3) var(--s-4);
+    background: var(--c-surface-2);
+    border-radius: var(--radius);
+    font-size: 14px;
   }
   .solution-header strong { font-size: 15px; }
   .verify-note {

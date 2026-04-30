@@ -18,22 +18,24 @@
   // Index up to which tasks are unlocked (exclusive upper bound).
   // unlockedUpTo = 0 means only task[0] is unlocked.
   // unlockedUpTo = 1 means tasks[0] and tasks[1] are unlocked. Etc.
-  let unlockedUpTo = 0;
+  function readUnlockedUpTo() {
+    if (!browser) return 0;
+    let val = 0;
+    for (let i = 0; i < exercise.tasks.length; i++) {
+      const task = exercise.tasks[i];
+      const p = getTaskProgress(exercise.id, task.id);
+      // Use everSubmitted (never cleared by Reset) so resetting a task never re-locks later tasks.
+      // MCQ uses `revealed` which is never cleared (no Reset on MCQ).
+      const wasSubmitted = task.type === 'mcq' ? !!p.revealed : !!p.everSubmitted;
+      if (wasSubmitted) val = i + 1;
+    }
+    return val;
+  }
+
+  let unlockedUpTo = readUnlockedUpTo();
 
   onMount(() => {
     setLastVisited(exercise.id);
-    if (browser) {
-      for (let i = 0; i < exercise.tasks.length; i++) {
-        const task = exercise.tasks[i];
-        const p = getTaskProgress(exercise.id, task.id);
-        const wasSubmitted = task.type === 'mcq' ? !!p.revealed : !!p.submitted;
-        if (wasSubmitted) {
-          unlockedUpTo = i + 1;
-        } else {
-          break;
-        }
-      }
-    }
   });
 
   function onTaskSubmit(taskIndex) {

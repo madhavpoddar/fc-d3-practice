@@ -9,7 +9,7 @@ const scale = d3.scaleLinear()
 
 export default {
   id: 'bar-orientation',
-  title: 'Raising the Bar(s)',
+  title: 'Raising the Bar',
   preImage: 'images/svg-rect-coords.svg',
   preTask: `
 In SVG, **(0, 0) is at the top-left** and the **y-axis points downward** — as shown in the diagram above. A \`rect\` with \`y = 0\` therefore anchors at the very top of the canvas and grows downward from there. This trips people up: the bars below are not broken, they are just growing in the wrong direction.
@@ -54,7 +54,7 @@ d3.select("#chart")
       id: 'bottom-up',
       title: 'Make bars grow from the bottom',
       description: `
-Right now every bar starts at \`y = 0\` (the top) and grows down. Change only the \`y\` attribute so each bar starts at the bottom of the canvas (y = 300) minus its own height.
+Right now every bar starts at \`y = 0\` (the top) and grows down. Correct it to have a non-flipped vertical bar chart. 
       `.trim(),
       starterCode: `${sharedData}
 d3.select("#chart")
@@ -90,7 +90,7 @@ d3.select("#chart")
       id: 'horizontal',
       title: 'Make bars horizontal',
       description: `
-Now make the bars run **horizontally** — growing from left to right, stacked top to bottom. You will need to swap which attributes carry the bar's length and position.
+Now make the bars run **horizontally** — growing from left to right, stacked top to bottom. 
       `.trim(),
       starterCode: `${sharedData}
 d3.select("#chart")
@@ -99,13 +99,13 @@ d3.select("#chart")
   .enter()
   .append("rect")
   .attr("x", 0)                          // bars start at the left edge
-  .attr("y", (d, i) => i * 35 + 10)      // stacked top to bottom
-  .attr("width", 40)                     // <-- the bar's length should live here
-  .attr("height", d => scale(d))         // <-- but it is in the wrong attribute
+  .attr("y", (d, i) => i * 60 + 20)      
+  .attr("width", 40)                     
+  .attr("height", d => scale(d))         
   .attr("fill", "#2b3a55");
 `,
       lockedRanges: [
-        { from: 1, to: 11 },
+        { from: 1, to: 12 },
         { from: 16, to: 16 }
       ],
       solution: `${sharedData}
@@ -115,12 +115,12 @@ d3.select("#chart")
   .enter()
   .append("rect")
   .attr("x", 0)
-  .attr("y", (d, i) => i * 35 + 10)
+  .attr("y", (d, i) => i * 60 + 20)
   .attr("width", d => scale(d))
-  .attr("height", 24)
+  .attr("height", 40)
   .attr("fill", "#2b3a55");
 `,
-      iframe: { width: 380, height: 200, html: '<svg id="chart" width="360" height="170" style="border:1px dashed #d6dae4;"></svg>' }
+      iframe: { width: 380, height: 200, html: '<svg id="chart" width="500" height="300" style="border:1px dashed #d6dae4;"></svg>' }
     }
   ]
 };
