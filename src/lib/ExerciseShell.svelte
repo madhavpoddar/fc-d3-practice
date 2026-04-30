@@ -24,10 +24,13 @@
     for (let i = 0; i < exercise.tasks.length; i++) {
       const task = exercise.tasks[i];
       const p = getTaskProgress(exercise.id, task.id);
-      // Use everSubmitted (never cleared by Reset) so resetting a task never re-locks later tasks.
-      // MCQ uses `revealed` which is never cleared (no Reset on MCQ).
+      // everSubmitted is never cleared by Reset; revealed is never cleared on MCQ (no Reset).
+      // Both are cleared by session clear, so clearing correctly re-locks tasks.
+      // The break enforces sequential unlock: task i only unlocks after all tasks before it
+      // are done. Without it, stale data at position i+1 would skip-unlock task i.
       const wasSubmitted = task.type === 'mcq' ? !!p.revealed : !!p.everSubmitted;
       if (wasSubmitted) val = i + 1;
+      else break;
     }
     return val;
   }
